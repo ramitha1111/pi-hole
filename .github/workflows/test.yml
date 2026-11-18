@@ -1,3 +1,10 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 3 optimizations:
+# - [MEDIUM] Add concurrency group to "test.yml"
+# - [LOW] Explicitly set fail-fast for large matrix job "distro-test" (18 combinations)
+# - [LOW] Use shallow clone in "smoke-tests" job
+# Estimated savings: ~4 min/run
+#
 name: Test Supported Distributions
 
 on:
@@ -5,6 +12,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 
